@@ -9,13 +9,11 @@
 #include "CORE/CoreDef.h"
 using namespace std;
 
-Grid::Grid() : NUM_ROWS(0), NUM_COLS(0) { // must be zero, otherwise deallocation fails
+Grid::Grid() : NUM_ROWS(0), NUM_COLS(0) {
+    
 }
-Grid::Grid(int _rows, int _cols) {
-    allocate(_rows, _cols);
-}
-Grid::Grid(int _rows, int _cols, int fill_value) {
-    allocate(_rows, _cols, fill_value);
+Grid::Grid(int _rows, int _cols, int fill_value = UNKNOWN) {
+    allocate(_rows, _cols, fill_value); 
 }
 Grid::Grid(string fname) {
     ifstream infile(fname.c_str());
@@ -45,7 +43,7 @@ Grid::Grid(string fname) {
         while (!infile.eof() && i < NUM_ROWS*NUM_COLS) {
             int t;
             infile >> t;
-            if (t == 0) t = Grid::UNKNOWN;
+            if (t == 0) t = UNKNOWN;
             board[i/NUM_COLS][i%NUM_COLS] = t;
             i++;
         }
@@ -61,8 +59,24 @@ int Grid::getNumCols() {
 }
 
 int Grid::getCell(int r, int c) {
-    if (!isValid(r,c)) return Grid::ERROR;
+    if (!isValid(r,c)) return ERROR;
     return board[r][c];
+}
+
+// static
+char Grid::getTypeChar(int val) {
+    switch (val) {
+        case BLACK:
+            return BLACK_CHAR;
+        case WHITE:
+            return WHITE_CHAR;
+        case UNKNOWN:
+            return UNKNOWN_CHAR;
+        case ERROR:
+            return ERROR_CHAR;
+        default:
+            return 'x';
+    }
 }
 
 bool Grid::isValid(int r, int c) {
@@ -90,18 +104,11 @@ void Grid::printRaw() {
 void Grid::print() {
     for (int r=0; r<NUM_ROWS; r++) {
         for (int c=0; c<NUM_COLS; c++) {
-            switch (board[r][c]) {
-                case Grid::BLACK:
-                    cout << BLACK_CHAR; break;
-                case Grid::WHITE:
-                    cout << WHITE_CHAR; break;
-                case Grid::UNKNOWN:
-                    cout << UNKNOWN_CHAR; break;
-                case Grid::ERROR:
-                    cout << ERROR_CHAR; break;
-                default:
-                    cout << board[r][c]; // issues with 2-digit+ numbers
-            }
+            if (isPreset(board[r][c]))
+                cout << board[r][c];
+            else
+                cout << getTypeChar(board[r][c]);
+                
             cout << ""; // trailing space, though not a big deal
         }
         cout << endl;
@@ -110,7 +117,7 @@ void Grid::print() {
 
 // Precondition: 'board' must be deallocated
 void Grid::allocate(int _rows, int _cols) {
-    allocate(_rows, _cols, Grid::UNKNOWN);
+    allocate(_rows, _cols, UNKNOWN);
 }
 void Grid::allocate(int _rows, int _cols, int fill_value) {
     

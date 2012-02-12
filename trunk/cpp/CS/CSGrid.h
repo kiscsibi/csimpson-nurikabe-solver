@@ -12,7 +12,6 @@ class CSGrid : public Grid {
         // inheritance
         //CSGrid() : Grid() {}; // inherited by default
         CSGrid(string fname) : Grid(fname) {};
-        CSGrid(int _rows, int _cols) : Grid(_rows,_cols) {};
         CSGrid(int _rows, int _cols, int fill_value) : Grid(_rows,_cols,fill_value) {};
         
         // substance

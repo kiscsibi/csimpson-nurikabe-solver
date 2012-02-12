@@ -12,8 +12,3 @@ Change constants by calling:
 
 ---------------------- DO NOT MODIFY THIS FILE!!! ---------------------- 
 */
-
-#define UNKNOWN_CHAR (char)176
-#define WHITE_CHAR (char)'.'
-#define BLACK_CHAR (char)219;
-#define ERROR_CHAR (char)'?';

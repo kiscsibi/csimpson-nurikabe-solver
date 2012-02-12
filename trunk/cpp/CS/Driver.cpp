@@ -6,8 +6,7 @@ using namespace std;
 int main() {
     
     //Grid g(5,5,10);
-    CSGrid g("DATA/grid_01.txt");
-    
+    CSGrid g("../DATA/grid_01.txt");
     g.print();
     g.setCell(0,0,Grid::BLACK);
     g.setCell(3,4,Grid::WHITE);

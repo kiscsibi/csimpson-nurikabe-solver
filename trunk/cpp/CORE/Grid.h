@@ -28,15 +28,18 @@ class Grid {
                         WHITE = -2,
                         BLACK = -3,
                         ERROR = -4;
+                        
+        static const char UNKNOWN_CHAR=(char)176,
+                        WHITE_CHAR=(char)249,
+                        BLACK_CHAR=(char)219,
+                        ERROR_CHAR='?';
         
         static bool isPreset(int value); // return whether the number is a valid preset (aka cluster number/preset) instead of flag
-        
-        char UNKNOWN_CHAR, WHITE_CHAR, BLACK_CHAR, ERROR_CHAR;
+        static char getTypeChar(int val); // get the character associated with the given type (black, etc)
         
         // --------------------------------------------
         
         Grid();
-        Grid(int _rows, int _cols);
         Grid(int _rows, int _cols, int fill_value);
         Grid(string fname); // read data from file
         ~Grid();
