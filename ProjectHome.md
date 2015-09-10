@@ -1,0 +1,1 @@
+This is a project intended to solve Nurikabe puzzles using straightforward and independent algorithms.
